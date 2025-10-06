@@ -25,6 +25,13 @@ long	ft_atol(const char *num)
 	return (res * sign);
 }
 
+static int	set_start_time(t_settings *set)
+{
+	if (gettimeofday(&(*set).start_time, NULL) != 0)
+		return (1);
+	return (0);
+}
+
 int	settings_init(t_settings *set, int argc, char *argv[])
 {
 	if (argc != 5 && argc != 6)
@@ -47,8 +54,9 @@ int	settings_init(t_settings *set, int argc, char *argv[])
 	{
 		(*set).max_eat_count = ft_atol(argv[5]);
 		if ((*set).max_eat_count <= 0)
-			return (printf("Number of times each philo must eat can't"),
-				printf("be lower than 1!\n"), 1);
+			return (printf("Number of times each philo must eat can't\n"), 1);
 	}
+	if (set_start_time(set))
+		return (1);
 	return (0);
 }

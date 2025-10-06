@@ -23,10 +23,13 @@ typedef struct s_settings
 typedef struct s_info
 {
 	pthread_mutex_t	*printf_lock;
+	pthread_mutex_t	*counter_lock;
+	pthread_mutex_t	*died_counter;
 	pthread_mutex_t	*all_mutexes;
 	t_settings		set;
 	int				index_of_philo;
 	int				*is_any_died;
+	int				*count_of_complete;
 }				t_info;
 
 //	----- Initializers -----
@@ -35,7 +38,6 @@ int		settings_init(t_settings *set, int argc, char *argv[]);
 
 //	----- Routines -----
 
-void	*observer_routine();
 void	*routine(void *arg);
 
 long	ft_atol(const char *num);
@@ -51,5 +53,6 @@ void	died_message(long ms_passed, int philo_id, t_info info);
 //	----- Free Functions -----
 
 void	info_free_on_error(t_info **info_arr, int count);
+void	free_forks(pthread_mutex_t *forks);
 
 #endif
